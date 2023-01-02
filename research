@@ -2,6 +2,6 @@ dup :
 	used to duplicate a filedescriptor so you can perform operations on 1 file with 2 descriptor
 	dup2 does the same but with a specified filedescriptor that you want to be the copy. this could
 	also be the stout
-
+<>
 good read about pipe function!
 	https://tldp.org/LDP/lpg/node11.html
