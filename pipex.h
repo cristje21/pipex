@@ -6,7 +6,7 @@
 /*   By: cristje <cristje@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/30 16:43:19 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/02 16:34:22 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/01/05 15:14:03 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@
 /* prototypes */
 
 char	**split_arg(char *arg);
+char	**get_command_acces(char *command, char **envp);
 
 #endif
