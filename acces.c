@@ -6,7 +6,7 @@
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/05 15:10:48 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/05 16:56:35 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/01/06 18:38:22 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,12 @@ static char	**create_paths(char **envp)
 	return (paths);
 }
 
-char	**get_command_acces(char *command, char **envp)
+static char	**check_access(char **result, char **paths)
 {
-	char	**result;
 	char	*temp;
 	int		i;
-	char	**paths;
 
 	i = 0;
-	paths = create_paths(envp);
-	if (paths == NULL)
-		return (NULL);
-	result = split_arg(command);
-	if (result == NULL)
-		return (free_all(paths, NULL));
 	while (paths[i])
 	{
 		temp = ft_strjoin(paths[i], result[0]);
@@ -92,4 +84,18 @@ char	**get_command_acces(char *command, char **envp)
 		i++;
 	}
 	return (free_all(paths, result));
+}
+
+char	**get_command_acces(char *command, char **envp)
+{
+	char	**result;
+	char	**paths;
+
+	paths = create_paths(envp);
+	if (paths == NULL)
+		return (NULL);
+	result = split_arg(command);
+	if (result == NULL)
+		return (free_all(paths, NULL));
+	return (check_access(result, paths));
 }

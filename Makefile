@@ -6,7 +6,7 @@
 #    By: cristje <cristje@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/12/30 16:43:16 by cvan-sch      #+#    #+#                  #
-#    Updated: 2023/01/05 15:56:11 by cvan-sch      ########   odam.nl          #
+#    Updated: 2023/01/06 15:41:50 by cvan-sch      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,3 +23,8 @@ $(NAME) : $(SRC)
 
 clean :
 	rm -f pipex
+
+fclean : clean
+	rm -f $(NAME)
+
+re : fclean all

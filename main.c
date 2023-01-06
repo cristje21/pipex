@@ -6,7 +6,7 @@
 /*   By: cristje <cristje@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/30 16:43:12 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/05 17:37:15 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/01/06 18:39:25 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char *argv[], char *envp[])
 	char	**command;
 	int		fd, i;
 
-	fd = open(argv[1], O_RDWR);
+	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 	{
 		printf("something went wrong opening the file\n");
@@ -30,14 +30,9 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	}
 	i = 0;
-	dup2(fd, 1);
-	printf("%s\n", command[1]);
-	//execve(command[0], command, NULL);
-	//system("leaks pipex");
-	// if (command == NULL)
-	// 	printf("no acces!\n");
-	// else
-	// 	printf("acces granted!\nThis is the path of the program you are accesing: %s\n", command[0]);
+	dup2(fd, 0);
+	//printf("%s\n%s\n%s\n", command[0], command[1], command[2]);
+	execve(command[0], command, NULL);
 	return (0);
 }
 
