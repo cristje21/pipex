@@ -6,11 +6,11 @@
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/02 16:19:12 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/05 17:36:22 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/01/08 18:31:11 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 static int	count_word_len(char *arg, int i)
 {
@@ -19,8 +19,6 @@ static int	count_word_len(char *arg, int i)
 
 	j = 0;
 	quote = 34;
-	while (arg[i] == ' ')
-		i++;
 	if (arg[i] == 39 || arg[i] == 34)
 	{
 		if (arg[i] == 39)
@@ -34,6 +32,9 @@ static int	count_word_len(char *arg, int i)
 			j++;
 	return (j);
 }
+
+//check == 0 if i just need plain count
+//check == 1 if 
 
 static int	count_args(char *arg)
 {
@@ -53,7 +54,7 @@ static int	count_args(char *arg)
 	return (count);
 }
 
-static char	**free_all(char **result, int i)
+static char	**free_all_malloc_failure(char **result, int i)
 {
 	i--;
 	while (i >= 0)
@@ -67,9 +68,10 @@ static char	**free_all(char **result, int i)
 
 static char	**make_all(char **result, char *arg, int count)
 {
-	int	i;
-	int	j;
-	int	k;
+	int		i;
+	int		j;
+	int		k;
+	char	*temp;
 
 	i = 0;
 	k = 0;
@@ -80,7 +82,13 @@ static char	**make_all(char **result, char *arg, int count)
 		j = count_word_len(arg, i);
 		result[k] = ft_substr(arg, i, j);
 		if (result[k] == NULL)
-			return (free_all(result, k));
+			return (free_all_malloc_failure(result, k));
+		if (result[k][0] == 39)
+		{
+			temp = ft_strtrim(result[k], "'");
+			free(result[k]);
+			result[k] = temp;
+		}
 		i += j + 1;
 		k++;
 	}

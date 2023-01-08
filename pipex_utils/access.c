@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   acces.c                                            :+:    :+:            */
+/*   access.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/05 15:10:48 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/06 18:38:22 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/01/08 12:37:59 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
-static char	**free_all(char	**s1, char **s2)
+char	**free_all(char	**s1, char **s2)
 {
 	int i;
 
