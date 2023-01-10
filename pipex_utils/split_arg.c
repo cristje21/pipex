@@ -6,7 +6,7 @@
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/02 16:19:12 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/08 18:31:11 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/01/10 16:14:56 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static int	count_word_len(char *arg, int i)
 	int	quote;
 
 	j = 0;
-	quote = 34;
-	if (arg[i] == 39 || arg[i] == 34)
+	quote = '\"';
+	if (arg[i] == '\'' || arg[i] == '\"')
 	{
-		if (arg[i] == 39)
-			quote += 5;
+		if (arg[i] == '\'')
+			quote = '\'';
 		j++;
 		while (arg[i + j] != quote && arg[i + j])
 			j++;
@@ -83,9 +83,9 @@ static char	**make_all(char **result, char *arg, int count)
 		result[k] = ft_substr(arg, i, j);
 		if (result[k] == NULL)
 			return (free_all_malloc_failure(result, k));
-		if (result[k][0] == 39)
+		if (result[k][0] == '\'' || result[k][0] == '\"')
 		{
-			temp = ft_strtrim(result[k], "'");
+			temp = ft_strtrim(result[k], "'\"");
 			free(result[k]);
 			result[k] = temp;
 		}
