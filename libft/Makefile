@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         ::::::::             #
-#    Makefile                                           :+:    :+:             #
-#                                                      +:+                     #
-#    By: cvan-sch <marvin@codam.nl>                   +#+                      #
-#                                                    +#+                       #
-#    Created: 2022/10/12 13:59:30 by cvan-sch      #+#    #+#                  #
-#    Updated: 2023/01/08 14:06:12 by cvan-sch      ########   odam.nl          #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cristje <cristje@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/10/12 13:59:30 by cvan-sch          #+#    #+#              #
+#    Updated: 2023/01/13 16:16:40 by cristje          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,9 @@ SRC_F = ft_isalpha.c ft_isdigit.c ft_isalnum.c\
 		ft_strtrim.c ft_itoa.c ft_strmapi.c\
 		ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c\
 		ft_putendl_fd.c ft_putnbr_fd.c ft_split.c\
-		ft_strrchr.c\
-		ft_lstnew.c ft_lstadd_front.c ft_lstsize.c\
-		ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c\
-		ft_lstclear.c ft_lstiter.c ft_lstmap.c
+		ft_strrchr.c ft_lstnew.c ft_lstadd_front.c\
+		ft_lstsize.c ft_lstlast.c ft_lstadd_back.c\
+		ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c\
 
 NAME = libft.a
 OBJ_F = $(SRC_F:%.c=%.o)
@@ -34,7 +33,7 @@ OBJ_F = $(SRC_F:%.c=%.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ_F)
-	ar r $(NAME) $^
+	ar rc $(NAME) $^
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c -o $@ $^

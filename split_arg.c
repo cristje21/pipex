@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   split_arg.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/01/02 16:19:12 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/10 16:14:56 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   split_arg.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/02 16:19:12 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/01/13 19:10:56 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "pipex.h"
+#include "libft/libft.h"
 
 static int	count_word_len(char *arg, int i)
 {
 	int	j;
-	int	quote;
 
 	j = 0;
-	quote = '\"';
 	if (arg[i] == '\'' || arg[i] == '\"')
 	{
-		if (arg[i] == '\'')
-			quote = '\'';
 		j++;
-		while (arg[i + j] != quote && arg[i + j])
+		while (arg[i + j] != arg[i] && arg[i + j])
 			j++;
-		//here check if is '\0' that would be error
+		if (!arg[i + j])
+			j = 0;
 	}
 	while (arg[i + j] != ' ' && arg[i + j])
 			j++;
@@ -66,6 +64,8 @@ static char	**free_all_malloc_failure(char **result, int i)
 	return (NULL);
 }
 
+//if ((result[k][0] == '\'' && result[k][ft_strlen(result[k]) -1] == '\'') || result[k][0] == '\"')
+
 static char	**make_all(char **result, char *arg, int count)
 {
 	int		i;
@@ -83,7 +83,8 @@ static char	**make_all(char **result, char *arg, int count)
 		result[k] = ft_substr(arg, i, j);
 		if (result[k] == NULL)
 			return (free_all_malloc_failure(result, k));
-		if (result[k][0] == '\'' || result[k][0] == '\"')
+		if ((result[k][0] == '\'' && result[k][ft_strlen(result[k]) - 1] == '\'' && ft_strlen(result[k]) > 1)
+		|| (result[k][0] == '\"' && result[k][ft_strlen(result[k]) - 1] == '\"' && ft_strlen(result[k]) > 1))
 		{
 			temp = ft_strtrim(result[k], "'\"");
 			free(result[k]);
