@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   split_arg.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/02 16:19:12 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/01/13 19:10:56 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   split_arg.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/01/02 16:19:12 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/01/14 16:24:47 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ static int	count_word_len(char *arg, int i)
 			j++;
 	return (j);
 }
-
-//check == 0 if i just need plain count
-//check == 1 if 
 
 static int	count_args(char *arg)
 {
@@ -63,8 +60,6 @@ static char	**free_all_malloc_failure(char **result, int i)
 	free(result);
 	return (NULL);
 }
-
-//if ((result[k][0] == '\'' && result[k][ft_strlen(result[k]) -1] == '\'') || result[k][0] == '\"')
 
 static char	**make_all(char **result, char *arg, int count)
 {
