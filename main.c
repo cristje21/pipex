@@ -6,74 +6,71 @@
 /*   By: cristje <cristje@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/30 16:43:12 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/17 19:37:41 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/01/20 21:49:37 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "libft/libft.h"
 
-int	do_first_command(char *argv[], char *envp[], int fd, int *my_pipe)
-{
-	char **command;
-
-	command = get_command_acces(argv[1], envp);
-	if (command == NULL)
-	{
-		perror("command");
-		exit(1);
-	}
-	dup2(fd, 0);
-	dup2(my_pipe[1], 1);
-	close(my_pipe[0]);
-	if (execve(command[0], command, NULL) == -1)
-		exit(1);
-	return 1;
-}
-
-void	do_child(char *arg, char *envp[], int p[], int fd)
-{
-	char buff[100];
-
-	read(p[0], buff, 100);
-	printf("%s!\n", buff);
-	exit(0);
-}
-
 int	execute(int argc, char *argv[], char *envp[])
 {
-	int	p[2];
-	int	fd;
-	int	pid;
-	int	i, status;
+	int		p[2];
+	int		pid;
+	char	**command;
+	int		fd;
+	int		status, stat;
 
-	i = 0;
-	fd = open(argv[0], O_RDONLY);
-	if (fd == -1)
-		return (perror("file"), -1);
-	while (i < argc)
+	status = 99;
+	stat = 888;
+	if (pipe(p) == -1)
+		return (perror("pipe"), -1);
+	pid = fork();
+	if (pid == -1)
+		return (perror("fork"), -1);
+	if (pid == 0)
 	{
-		if (pipe(p) == -1)
-			return (perror("pipe"), -1);
+		fd = open(argv[0], O_RDONLY);
+		if (fd == -1)
+		{
+			perror("fd: child");
+			exit (errno);
+		}
+		dup2(fd, 0);
+		command = get_command_acces(argv[1], envp);
+		if (command == NULL)
+			exit(1);
+		close(p[0]);
 		dup2(p[1], 1);
-		pid = fork();
-		if (pid == -1)
-			return (perror("fork"), -1);
-		if (pid == 0)
-		{
-			if (i == 0)
-				dup2(fd, 0);
-			else
-				dup2(p[0], 0);
-			do_child(argv[i], envp, p, fd);
-		}
-		else
-		{
-			
-		}
-		waitpid(pid, &status, NULL);
-		i++;
+		close(p[1]);
+		execve(command[0], command, NULL);
 	}
+	else
+		waitpid(pid, &status, 0);
+	pid = fork();
+	if (pid == -1)
+		return (-1);
+	if (pid == 0)
+	{
+		fd = open(argv[3], O_WRONLY);
+		if (fd == -1)
+		{
+			printf("something went wrong in the second process\n");
+			exit(errno);
+		}
+		command = get_command_acces(argv[2], envp);
+		if (command == NULL)
+			return (-1);
+		close(p[1]);
+		dup2(p[0], 0);
+		close(p[0]);
+		dup2(fd, 1);
+		close(fd);
+		execve(command[0], command, NULL);
+	}
+	close(p[0]);
+	close(p[1]);
+	waitpid(pid, NULL, 0);
 	return (0);
 }
 
@@ -85,8 +82,8 @@ int	main(int argc, char *argv[], char *envp[])
 		return (0);
 	}
 	if (execute(argc - 1, &argv[1], envp) == -1)
-		perror("error");
-	printf("executed and returning...\n");
+		printf("something went wrong!\n");
+	printf("main process executed and returning...\n");
 	return (0);
 }
 
