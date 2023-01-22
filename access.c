@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   access.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/01/05 15:10:48 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/14 21:06:59 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   access.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/05 15:10:48 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/01/22 11:24:34 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static char	**check_access(char **result, char **paths)
 		temp = ft_strjoin(paths[i], result[0]);
 		if (temp == NULL)
 			return (free_all(result, paths));
-		if (!access(temp, F_OK | X_OK))
+		if (!access(temp, X_OK))
 		{
 			free(result[0]);
 			result[0] = temp;
