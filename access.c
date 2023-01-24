@@ -6,7 +6,7 @@
 /*   By: cristje <cristje@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/05 15:10:48 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/23 20:29:25 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/01/24 16:48:59 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,6 @@ static char	**check_access(char **result, char **paths)
 			return (free_all(result, paths));
 		if (!access(temp, F_OK))
 		{
-			if (access(temp, X_OK) == -1)
-			{
-				perror(temp);
-				printf("errno after %d\n", errno);
-				exit(errno);
-			}
 			free(result[0]);
 			result[0] = temp;
 			free_all(paths, NULL);

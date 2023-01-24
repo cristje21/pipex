@@ -6,7 +6,7 @@
 /*   By: cristje <cristje@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/30 16:43:12 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/23 20:28:00 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/01/24 17:44:40 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,29 @@ void	do_child(char *arg, char *envp[], int fd_to_read_from, int p[])
 	exit(98);
 }
 
-// void	redirect_outfile(int p[], char *file)
-// {
-// 	int	fd;
+void	redirect_outfile(char *argv[], char *envp[], int fd_to_read_from)
+{
+	int		fd;
+	char	**command;
 
-// 	fd = open(file, O_WRONLY | O_TRUNC | O_CREAT);
-// 	if (fd == -1)
-// 	{
-// 		printf("something went wrong creating or opening the outfile!\n");
-// 		exit(errno);
-// 	}
-// 	dup2(fd, p[1])
-// }
+	printf("argv[1]: %s\n", argv[1]);
+	fd = open(argv[1], (O_WRONLY | O_TRUNC | O_CREAT), S_IRUSR);
+	if (fd == -1)
+	{
+		printf("something went wrong creating or opening the outfile! errno: %d\n", errno);
+		exit(errno);
+	}
+	command = get_command_acces(*argv, envp);
+	if (command == NULL)
+		return ;
+	dup2(fd, 1);
+	close(fd);
+	if (execve(command[0], command, NULL) == -1)
+	{
+		printf("execve failed bro wtf\nfailed with : %s\n", command[0]);
+		exit(1);
+	}
+}
 
 int	recursive_redirection(char *argv[], char *envp[], int argc, int fd_to_read_from)
 {
@@ -61,24 +72,24 @@ int	recursive_redirection(char *argv[], char *envp[], int argc, int fd_to_read_f
 	pid_t	pid;
 	char	**command;
 
-	if (pipe(new_pipe) == -1)
+	if (argc > 2 && pipe(new_pipe) == -1)
 		error_checking("pipe");
 	pid = fork();
 	if (pid == -1)
 		error_checking("fork");
 	if (pid == 0)
 	{
-		if (argc == 1)
-			dup2(1, new_pipe[1]);
+		if (argc == 2)
+			redirect_outfile(argv, envp, fd_to_read_from);
 		do_child(*argv, envp, fd_to_read_from, new_pipe);
-		//do child execute command
 	}
 	close(new_pipe[1]);
 	wait(NULL);
-	if (argc != 1)
-		return (recursive_redirection(++argv, envp, --argc, new_pipe[0]));
+	if (argc > 2)
+		return (recursive_redirection(argv + 1, envp, argc - 1, new_pipe[0]));
+	close(new_pipe[0]);
 	printf("done with all commands and returning!\n");
-	return 0;
+	return (0);
 }
 
 void	initialize(int argc, char *argv[], char *envp[])
