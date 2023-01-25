@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/12/30 16:43:12 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/24 17:44:40 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/30 16:43:12 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/01/25 15:44:43 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	do_child(char *arg, char *envp[], int fd_to_read_from, int p[])
 	close(p[0]);
 	execve(command[0], command, NULL);
 	printf("execve did not execute properly!\n");
-	exit(98);
+	perror("execve");
+	exit(errno);
 }
 
 void	redirect_outfile(char *argv[], char *envp[], int fd_to_read_from)
@@ -47,8 +48,7 @@ void	redirect_outfile(char *argv[], char *envp[], int fd_to_read_from)
 	int		fd;
 	char	**command;
 
-	printf("argv[1]: %s\n", argv[1]);
-	fd = open(argv[1], (O_WRONLY | O_TRUNC | O_CREAT), S_IRUSR);
+	fd = open(argv[1], O_RDWR | O_TRUNC | O_CREAT, S_IRWXU);
 	if (fd == -1)
 	{
 		printf("something went wrong creating or opening the outfile! errno: %d\n", errno);
@@ -59,6 +59,8 @@ void	redirect_outfile(char *argv[], char *envp[], int fd_to_read_from)
 		return ;
 	dup2(fd, 1);
 	close(fd);
+	dup2(fd_to_read_from, 0);
+	close(fd_to_read_from);
 	if (execve(command[0], command, NULL) == -1)
 	{
 		printf("execve failed bro wtf\nfailed with : %s\n", command[0]);
@@ -84,10 +86,11 @@ int	recursive_redirection(char *argv[], char *envp[], int argc, int fd_to_read_f
 		do_child(*argv, envp, fd_to_read_from, new_pipe);
 	}
 	close(new_pipe[1]);
+	if (argc <= 2)
+		close(new_pipe[0]);
 	wait(NULL);
 	if (argc > 2)
 		return (recursive_redirection(argv + 1, envp, argc - 1, new_pipe[0]));
-	close(new_pipe[0]);
 	printf("done with all commands and returning!\n");
 	return (0);
 }
