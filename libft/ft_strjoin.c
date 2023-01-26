@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_strjoin.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <marvin@codam.nl>                   +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/10/13 11:55:16 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2022/10/13 11:55:19 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/13 11:55:16 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/01/26 15:27:47 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	s = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (s == 0)
-		return (0);
+	s = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (s == NULL)
+		return (NULL);
 	while (ft_strlen(s1) > i)
 	{
 		s[i] = s1[i];

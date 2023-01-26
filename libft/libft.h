@@ -1,25 +1,64 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   libft.h                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <marvin@codam.nl>                   +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/10/12 14:00:07 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2022/10/30 11:33:45 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/12 14:00:07 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/01/26 13:20:04 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdarg.h>
+# include <stddef.h>
 
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+/*	GET_NEXT_LINE	*/
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
+char	*get_next_line(int fd);
+int		str_len_of_line(char *s, int check);
+char	*new_stash(char *stash, int line_length, int check);
+char	*gnl_join(char *next_line, char *stash, int line_length);
+char	*get_n_line(char *next_line, char **stash, int fd);
+int		use_stash(char **stash, char **next_line);
+void	re_assign(char **stash, char **next_line, int o);
+
+/*	PRINTF	*/
+
+int		ft_printf(const char *str, ...);
+int		put_all(va_list list, const char c);
+char	*put_char_str(va_list list, const char c);
+int		put_base_16(unsigned int num, const char c);
+int		put_d(int num);
+int		put_pointer(unsigned long num);
+int		char_count(unsigned long num, int base);
+char	*res_set(unsigned int num, char *base_set, int i, int base);
+int		put_unsigned(unsigned int num);
+int		ft_putchar_return(char c);
+int		ft_putstr_return(char *s);
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_itoa(int n);
+size_t	ft_strlen(const char *s);
+char	*ft_strdup(const char *s1);
+
+/*	LIBFT	*/
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 size_t	ft_strlen(const char *s);

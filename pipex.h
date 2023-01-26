@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   pipex.h                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/12/30 16:43:19 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/17 13:51:15 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/30 16:43:19 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/01/26 15:38:42 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define PIPEX_H
 
 /* libraries included */
+
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 
 # include <unistd.h>
 # include <fcntl.h>

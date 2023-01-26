@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   access.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/01/05 15:10:48 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/24 16:48:59 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   access.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/05 15:10:48 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/01/26 15:29:08 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	**create_paths(char **envp)
 	i = 0;
 	if (envp == NULL)
 		return (NULL);
-	while (ft_strncmp(envp[i], "PATH=", 5))
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
 	if (envp[i] == NULL)
 		return (NULL);
@@ -73,7 +73,10 @@ static char	**check_access(char **result, char **paths)
 	{
 		temp = ft_strjoin(paths[i], result[0]);
 		if (temp == NULL)
+		{
+			exit(ENOMEM);
 			return (free_all(result, paths));
+		}
 		if (!access(temp, F_OK))
 		{
 			free(result[0]);

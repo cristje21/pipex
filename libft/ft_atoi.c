@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_atoi.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <marvin@codam.nl>                   +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/10/08 20:46:58 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2022/10/08 20:47:02 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/08 20:46:58 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/01/26 13:45:51 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ static int	whitespace(char *s)
 
 int	ft_atoi(const char *str)
 {
-	int			i;
-	int			res;
-	char		*s;
-	int			m;
+	int		i;
+	int		res;
+	char	*s;
+	int		m;
 
 	s = (char *)str;
 	res = 0;
@@ -40,7 +40,7 @@ int	ft_atoi(const char *str)
 			m = -1;
 		i++;
 	}
-	while (s[i] < 58 && s[i] > 47)
+	while (s[i] <= '9' && s[i] >= '0')
 		res = res * 10 + s[i++] - '0';
 	return (res * m);
 }

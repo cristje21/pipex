@@ -6,7 +6,7 @@
 /*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:43:12 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/01/25 15:44:43 by cristje          ###   ########.fr       */
+/*   Updated: 2023/01/26 16:02:11 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	error_checking(char *s)
 {
 	perror(s);
-	exit(1);
+	exit(errno);
 }
 
 void	do_child(char *arg, char *envp[], int fd_to_read_from, int p[])
@@ -68,31 +68,29 @@ void	redirect_outfile(char *argv[], char *envp[], int fd_to_read_from)
 	}
 }
 
-int	recursive_redirection(char *argv[], char *envp[], int argc, int fd_to_read_from)
+void	recursive_redirection(char *argv[], char *envp[], int argc, int fd_to_read_from)
 {
 	int		new_pipe[2];
 	pid_t	pid;
-	char	**command;
+	int		status;
 
-	if (argc > 2 && pipe(new_pipe) == -1)
-		error_checking("pipe");
+	if (pipe(new_pipe) == -1)
+		exit(errno);
 	pid = fork();
 	if (pid == -1)
-		error_checking("fork");
-	if (pid == 0)
+		exit(errno);
+	if (!pid)
 	{
 		if (argc == 2)
 			redirect_outfile(argv, envp, fd_to_read_from);
 		do_child(*argv, envp, fd_to_read_from, new_pipe);
 	}
-	close(new_pipe[1]);
-	if (argc <= 2)
+	if (argc == 2)
 		close(new_pipe[0]);
-	wait(NULL);
+	close(new_pipe[1]);
+	wait(&status);
 	if (argc > 2)
-		return (recursive_redirection(argv + 1, envp, argc - 1, new_pipe[0]));
-	printf("done with all commands and returning!\n");
-	return (0);
+		recursive_redirection(argv + 1, envp, argc - 1, new_pipe[0]);
 }
 
 void	initialize(int argc, char *argv[], char *envp[])
@@ -107,9 +105,10 @@ void	initialize(int argc, char *argv[], char *envp[])
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	if (argc < 1)
+	if (argc < 5)
 	{
-		printf("%d arguments is too little.\n", argc - 1);
+		dup2(STDERR, STDOUT);
+		ft_printf("error: please enter atleast 4 arguments (excluding the executable)\n");
 		return (0);
 	}
 	initialize(argc - 1, &argv[1], envp);
