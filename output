@@ -86,7 +86,3 @@ total 888
 -rw-r--r--  1 cvan-sch  piscine    768 Jan 28 11:29 ft_strrchr.o
 -rw-r--r--  1 cvan-sch  piscine   1689 Jan  2 14:40 ft_strtrim.c
 -rw-r--r--  1 cvan-sch  piscine   1608 Jan 28 11:29 ft_strtrim.o
--rw-r--r--  1 cvan-sch  piscine   1280 Jan  2 14:40 ft_substr.c
--rw-r--r--  1 cvan-sch  piscine   1040 Jan 28 11:29 ft_substr.o
--rw-r--r--  1 cvan-sch  piscine    959 Jan  2 14:40 ft_tolower.c
--
