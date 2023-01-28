@@ -6,14 +6,14 @@
 #    By: cristje <cristje@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/12/30 16:43:16 by cvan-sch      #+#    #+#                  #
-#    Updated: 2023/01/28 22:54:37 by cvan-sch      ########   odam.nl          #
+#    Updated: 2023/01/28 23:02:09 by cvan-sch      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 SRC		= main.c split_arg.c access.c pipex_utils.c
 CFLAGS	= -Wall -Werror -Wextra
 NAME	= pipex
-MSG		?= default_value_if_not_set_in_environment
+MSG		?= "automatic push"
 
 all : $(NAME)
 
