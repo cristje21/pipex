@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   access.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 15:10:48 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/01/28 10:52:12 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   access.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/01/05 15:10:48 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/01/28 22:38:44 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 char	**free_all(char	**s1, char **s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (s1)
@@ -44,7 +44,7 @@ static char	**create_paths(char **envp)
 	while (envp[i] && ft_strncmp(envp[i], "PATH", 4))
 		i++;
 	if (envp[i] == NULL)
-		error("no paths found", errno);
+		exit(151);
 	paths = ft_split(&envp[i][5], ':');
 	if (paths == NULL)
 		exit(ENOMEM);
@@ -82,20 +82,15 @@ static char	**check_access(char **result, char **paths)
 		free(temp);
 		i++;
 	}
-	
-	return (free_all(paths, result));
+	exit(150);
 }
 
 char	**get_command_acces(char *command, char **envp)
 {
 	char	**result;
 	char	**paths;
-	
+
 	paths = create_paths(envp);
-	if (paths == NULL)
-		return (NULL);
 	result = split_arg(command);
-	if (result == NULL)
-		return (free_all(paths, NULL));
 	return (check_access(result, paths));
 }

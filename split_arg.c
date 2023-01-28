@@ -6,7 +6,7 @@
 /*   By: cristje <cristje@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/02 16:19:12 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/14 16:24:47 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/01/28 22:50:18 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ static int	count_args(char *arg)
 	return (count);
 }
 
-static char	**free_all_malloc_failure(char **result, int i)
+static int	check_quotes(char *s)
 {
-	i--;
-	while (i >= 0)
-	{
-		free(result[i]);
-		i--;
-	}
-	free(result);
-	return (NULL);
+	int	len;
+
+	len = ft_strlen(s);
+	if (len > 1)
+		if (s[0] == '\'' || s[0] == '\"')
+			if (s[len - 1] == s[0])
+				return (1);
+	return (0);
 }
 
 static char	**make_all(char **result, char *arg, int count)
@@ -77,16 +77,14 @@ static char	**make_all(char **result, char *arg, int count)
 		j = count_word_len(arg, i);
 		result[k] = ft_substr(arg, i, j);
 		if (result[k] == NULL)
-			return (free_all_malloc_failure(result, k));
-		if ((result[k][0] == '\'' && result[k][ft_strlen(result[k]) - 1] == '\'' && ft_strlen(result[k]) > 1)
-		|| (result[k][0] == '\"' && result[k][ft_strlen(result[k]) - 1] == '\"' && ft_strlen(result[k]) > 1))
+			exit(ENOMEM);
+		if (check_quotes(result[k]))
 		{
-			temp = ft_strtrim(result[k], "'\"");
-			free(result[k]);
+			temp = ft_trim_quote(result[k]);
 			result[k] = temp;
 		}
 		i += j + 1;
-		k++;
+		k += 1;
 	}
 	result[k] = NULL;
 	return (result);
@@ -95,15 +93,12 @@ static char	**make_all(char **result, char *arg, int count)
 char	**split_arg(char *arg)
 {
 	char	**result;
-	int		check;
 	int		count;
 
 	count = count_args(arg);
 	result = malloc((count + 1) * sizeof(char *));
 	if (result == NULL)
-		return (NULL);
+		exit(ENOMEM);
 	result = make_all(result, arg, count);
-	if (result == NULL)
-		return (NULL);
 	return (result);
 }

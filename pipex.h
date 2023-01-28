@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/30 16:43:19 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/01/28 10:20:27 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   pipex.h                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/12/30 16:43:19 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/01/28 22:23:52 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 # define PIPEX_H
 
 /* libraries included */
-
-# define STDIN 0
-# define STDOUT 1
-# define STDERR 2
 
 # include <unistd.h>
 # include <fcntl.h>
@@ -33,6 +29,14 @@ char	**split_arg(char *arg);
 char	**get_command_acces(char *command, char **envp);
 
 char	**free_all(char	**s1, char **s2);
-void	error(char *s, int err);
+void	ft_err(char *s);
+
+/*	pipex utils */
+
+char	*ft_trim_quote(char *s);
+void	check_status(int exit_status);
+void	close_pipe(int pipe[]);
+void	ft_err(char *s);
+void	print_array(char **arr);
 
 #endif
