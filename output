@@ -89,12 +89,4 @@ total 888
 -rw-r--r--  1 cvan-sch  piscine   1280 Jan  2 14:40 ft_substr.c
 -rw-r--r--  1 cvan-sch  piscine   1040 Jan 28 11:29 ft_substr.o
 -rw-r--r--  1 cvan-sch  piscine    959 Jan  2 14:40 ft_tolower.c
--rw-r--r--  1 cvan-sch  piscine    672 Jan 28 11:29 ft_tolower.o
--rw-r--r--  1 cvan-sch  piscine    960 Jan  2 14:40 ft_toupper.c
--rw-r--r--  1 cvan-sch  piscine    672 Jan 28 11:29 ft_toupper.o
--rw-r--r--  1 cvan-sch  piscine   1570 Jan 28 11:28 get_next_line.c
--rw-r--r--  1 cvan-sch  piscine   1376 Jan 28 11:29 get_next_line.o
--rw-r--r--  1 cvan-sch  piscine   3606 Jan 28 11:28 get_next_line_utils.c
--rw-r--r--  1 cvan-sch  piscine   3020 Jan 28 11:29 get_next_line_utils.o
--rw-r--r--  1 cvan-sch  piscine  52384 Jan 28 11:29 libft.a
--rw-r--r--  1 cvan-sch  piscine   4078 Jan 28 12:55 libft.h
+-
