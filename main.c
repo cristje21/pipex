@@ -6,16 +6,17 @@
 /*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:43:12 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/01/26 16:02:11 by cristje          ###   ########.fr       */
+/*   Updated: 2023/01/28 10:27:26 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "libft/libft.h"
 
-void	error_checking(char *s)
+void	error(char *s, int err)
 {
-	perror(s);
+	if (err)
+		perror(s);
 	exit(errno);
 }
 
@@ -50,10 +51,7 @@ void	redirect_outfile(char *argv[], char *envp[], int fd_to_read_from)
 
 	fd = open(argv[1], O_RDWR | O_TRUNC | O_CREAT, S_IRWXU);
 	if (fd == -1)
-	{
-		printf("something went wrong creating or opening the outfile! errno: %d\n", errno);
-		exit(errno);
-	}
+		error("outfile", errno);
 	command = get_command_acces(*argv, envp);
 	if (command == NULL)
 		return ;
@@ -75,14 +73,18 @@ void	recursive_redirection(char *argv[], char *envp[], int argc, int fd_to_read_
 	int		status;
 
 	if (pipe(new_pipe) == -1)
-		exit(errno);
+		error("pipe", errno);
 	pid = fork();
 	if (pid == -1)
-		exit(errno);
-	if (!pid)
+		error("fork", errno);
+	if (pid == 0)
 	{
 		if (argc == 2)
+		{
+			close(new_pipe[0]);
+			close(new_pipe[1]);
 			redirect_outfile(argv, envp, fd_to_read_from);
+		}
 		do_child(*argv, envp, fd_to_read_from, new_pipe);
 	}
 	if (argc == 2)
@@ -105,6 +107,7 @@ void	initialize(int argc, char *argv[], char *envp[])
 
 int	main(int argc, char *argv[], char *envp[])
 {
+	
 	if (argc < 5)
 	{
 		dup2(STDERR, STDOUT);

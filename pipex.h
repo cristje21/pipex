@@ -6,7 +6,7 @@
 /*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:43:19 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/01/26 15:38:42 by cristje          ###   ########.fr       */
+/*   Updated: 2023/01/28 10:20:27 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ char	**split_arg(char *arg);
 char	**get_command_acces(char *command, char **envp);
 
 char	**free_all(char	**s1, char **s2);
+void	error(char *s, int err);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 15:10:48 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/01/26 15:29:08 by cristje          ###   ########.fr       */
+/*   Updated: 2023/01/28 10:52:12 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,19 @@ static char	**create_paths(char **envp)
 	int		i;
 
 	i = 0;
-	if (envp == NULL)
-		return (NULL);
-	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
+	while (envp[i] && ft_strncmp(envp[i], "PATH", 4))
 		i++;
 	if (envp[i] == NULL)
-		return (NULL);
+		error("no paths found", errno);
 	paths = ft_split(&envp[i][5], ':');
 	if (paths == NULL)
-		return (NULL);
+		exit(ENOMEM);
 	i = 0;
 	while (paths[i])
 	{
 		temp = ft_strjoin(paths[i], "/");
 		if (temp == NULL)
-			return (free_all(paths, NULL));
+			exit(ENOMEM);
 		free(paths[i]);
 		paths[i] = temp;
 		i++;
@@ -73,10 +71,7 @@ static char	**check_access(char **result, char **paths)
 	{
 		temp = ft_strjoin(paths[i], result[0]);
 		if (temp == NULL)
-		{
 			exit(ENOMEM);
-			return (free_all(result, paths));
-		}
 		if (!access(temp, F_OK))
 		{
 			free(result[0]);
@@ -87,6 +82,7 @@ static char	**check_access(char **result, char **paths)
 		free(temp);
 		i++;
 	}
+	
 	return (free_all(paths, result));
 }
 
@@ -94,7 +90,7 @@ char	**get_command_acces(char *command, char **envp)
 {
 	char	**result;
 	char	**paths;
-
+	
 	paths = create_paths(envp);
 	if (paths == NULL)
 		return (NULL);
