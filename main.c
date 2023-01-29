@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/12/30 16:43:12 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/28 22:36:31 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/30 16:43:12 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/01/29 14:09:34 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	redirect(char *argv[], char *envp[], int argc, int fd_to_read_from)
 		close(new_pipe[0]);
 	close(new_pipe[1]);
 	wait(&status);
-	check_status(status);
+	check_status(status, *argv);
 	if (argc > 2)
 		redirect(argv + 1, envp, argc - 1, new_pipe[0]);
 	if (WIFEXITED(status))
@@ -85,6 +85,8 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_putstr_fd("error: enter 4 arguments\n", STDERR_FILENO);
 		exit(1);
 	}
+	if (!strncmp(argv[1], "here_doc", 9))
+		return(here_doc(&argv[2], argc - 2));
 	fd = open(argv[1], O_RDONLY);
 	return (redirect(&argv[2], envp, argc - 2, fd));
 }

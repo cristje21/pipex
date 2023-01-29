@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/01/28 20:18:41 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/28 22:23:39 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/28 20:18:41 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/01/29 13:28:42 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,34 @@ char	*ft_trim_quote(char *s)
 	return (new);
 }
 
-void	check_status(int exit_status)
+static void put_first_word(char *s, char *msg)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != ' ' && s[i])
+		i++;
+	if (write(2, s, i) == -1 || write(2, ": ", 2) == -1 ||
+		write(2, msg, ft_strlen(msg)) == -1)
+		exit(errno);
+}
+
+void	check_status(int exit_status, char *program)
 {
 	int	status;
 
 	if (!WIFEXITED(exit_status))
 		return ;
 	status = WEXITSTATUS(exit_status);
+	//printf("program: %s exited with status: %d\n", program, status);
 	if (!status)
 		return ;
-	else if (status == 150)
-		ft_putstr_fd("pipex: command not found\n", STDERR_FILENO);
+	if (status == ENOENT)
+		ft_putstr_fd("pipex: ", STDERR_FILENO);
+	if (status == 150)
+		put_first_word(program, "command not found\n");
 	else if (status == 151)
-		ft_putstr_fd("pipex: no environment\n", STDERR_FILENO);
+		put_first_word(program, "no environment (path) found\n");
 	else
 	{
 		ft_putstr_fd("pipex: ", STDERR_FILENO);
@@ -57,16 +72,4 @@ void	ft_err(char *s)
 {
 	perror(s);
 	exit(errno);
-}
-
-void	print_array(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		ft_printf("%s\n", arr[i]);
-		i++;
-	}
 }

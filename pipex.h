@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   pipex.h                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/12/30 16:43:19 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/28 22:23:52 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/30 16:43:19 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/01/29 14:02:34 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,13 @@ void	ft_err(char *s);
 /*	pipex utils */
 
 char	*ft_trim_quote(char *s);
-void	check_status(int exit_status);
+void	check_status(int exit_status, char *program);
 void	close_pipe(int pipe[]);
 void	ft_err(char *s);
 void	print_array(char **arr);
+
+/*  here_doc    */
+
+int	here_doc(char *argv[], int argc);
 
 #endif
