@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: cristje <cristje@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/12 13:59:30 by cvan-sch          #+#    #+#              #
-#    Updated: 2023/01/29 00:31:58 by cristje          ###   ########.fr        #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: cristje <cristje@student.42.fr>              +#+                      #
+#                                                    +#+                       #
+#    Created: 2022/10/12 13:59:30 by cvan-sch      #+#    #+#                  #
+#    Updated: 2023/01/30 16:29:20 by cvan-sch      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC_F = ft_isalpha.c ft_isdigit.c ft_isalnum.c\
 		ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c\
 		get_next_line.c get_next_line_utils.c\
 		ft_printf.c ft_put_two.c ft_put.c\
-		ft_print_array.c
+		ft_print_array.c ft_putnstr_fd.c
 
 NAME = libft.a
 OBJ_F = $(SRC_F:%.c=%.o)

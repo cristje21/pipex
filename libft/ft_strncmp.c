@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/08 20:46:12 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/01/26 15:21:19 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_strncmp.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/10/08 20:46:12 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/01/29 18:00:41 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	str2 = (unsigned char *)s2;
 	if (str1 == NULL && str2 == NULL)
 		return (0);
+	else if (str1 == NULL || str2 == NULL)
+		return (1);
 	while (i < n && (str1[i] || str2[i]))
 	{
 		if (str1[i] != str2[i])

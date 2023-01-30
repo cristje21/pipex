@@ -1,22 +1,45 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   here_doc.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/01/30 20:02:54 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/01/30 20:02:55 by cvan-sch      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 #include "libft/libft.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int	here_doc(char *argv[], int argc)
+int	here_doc(char *limiter)
 {
-	char	*limiter;
-	int		temp_fd;
+	int		tmp_fd;
+	char	*str;
+	char	*s;
 
-	temp_fd = open(".", O_TMPFILE | O_RDWR, S_IRUSR | S_IWUSR);
-	if (temp_fd == -1)
+	tmp_fd = open("here_doc", O_RDWR | O_CREAT | O_TRUNC, S_IRUSR
+			| S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+	if (tmp_fd == -1)
 	{
-		ft_printf("something went wrong\n");
-		perror("perror");
-		exit(23);
+		perror("tmp_fd");
+		exit(ENOENT);
 	}
-	limiter = *argv;
-	ft_printf("argc :%d, limiter: %s\n", argc, limiter);
-	return (0);
+	s = ft_strjoin(limiter, "\n");
+	write(1, "> ", 2);
+	str = get_next_line(STDIN_FILENO);
+	while (ft_strncmp(s, str, ft_strlen(s)))
+	{
+		ft_putstr_fd(str, tmp_fd);
+		free(str);
+		write(1, "> ", 2);
+		str = get_next_line(STDIN_FILENO);
+	}
+	free(str);
+	free(s);
+	return (tmp_fd);
 }

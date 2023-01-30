@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/12 14:00:07 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/01/29 00:30:36 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   libft.h                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/10/12 14:00:07 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/01/30 16:29:04 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 /*	later added	*/
 
 void	print_array(char **array);
+int		ft_putnstr_fd(int fd, int n, ...);
 
 #endif

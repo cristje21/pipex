@@ -1,17 +1,17 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         ::::::::             #
-#    Makefile                                           :+:    :+:             #
-#                                                      +:+                     #
-#    By: cristje <cristje@student.42.fr>              +#+                      #
-#                                                    +#+                       #
-#    Created: 2022/12/30 16:43:16 by cvan-sch      #+#    #+#                  #
-#    Updated: 2023/01/30 20:42:13 by cvan-sch      ########   odam.nl          #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cristje <cristje@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/12/30 16:43:16 by cvan-sch          #+#    #+#              #
+#    Updated: 2023/01/29 14:26:19 by cristje          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC		=	main.c split_arg.c access.c pipex_utils.c\
-			here_doc.c paths.c
+			here_doc.c
 CFLAGS	= -Wall -Werror -Wextra
 NAME	= pipex
 MSG		?="automatic push"
