@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   paths.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/01/30 17:36:14 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/30 19:59:39 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   paths.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/30 17:36:14 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/01/30 22:53:22 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ char	**free_all(char	**s1)
 	if (s1)
 	{
 		while (s1[i])
-			free(s1[i++]);
+		{
+			free(s1[i]);
+			i++;
+		}
 		free(s1);
 	}
 	return (NULL);
@@ -33,6 +36,8 @@ static char	**finish_paths(char **paths)
 	char	*temp;
 
 	i = 0;
+	if (paths == NULL)
+		return (NULL);
 	while (paths[i])
 	{
 		temp = ft_strjoin(paths[i], "/");
@@ -60,7 +65,7 @@ static char	**path_manual(void)
 	{
 		paths[i] = ft_strdup(temp[i]);
 		if (paths[i] == NULL)
-			free_all(paths);
+			return (free_all(paths));
 		i++;
 	}
 	paths[i] = NULL;
@@ -81,13 +86,11 @@ char	**create_paths(char **envp)
 	if (envp[i] == NULL)
 		return (NULL);
 	paths = ft_split(&envp[i][5], ':');
-	if (paths == NULL)
-	{
-		ft_putnstr_fd(STDERR_FILENO, 2, "pipex: ", strerror(ENOMEM));
-		return (NULL);
-	}
 	paths = finish_paths(paths);
 	if (paths == NULL)
+	{
+		ft_putnstr_fd(STDERR_FILENO, 3, "pipex: ", strerror(ENOMEM), "\n");
 		return (NULL);
+	}
 	return (paths);
 }

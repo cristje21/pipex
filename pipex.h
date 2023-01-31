@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   pipex.h                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/12/30 16:43:19 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/30 21:51:29 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/30 16:43:19 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/01/31 07:25:19 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,12 @@ char	**create_paths(char **envp);
 
 /*	access	*/
 
-
+char	**get_command_acces(char *command, char **paths);
 
 /* prototypes */
 
-void	redirect(char *argv[], char **paths, int argc, int fd_to_read_from);
-
+int		redirect(char *argv[], char **paths, int argc, int fd_to_read_from);
 char	**split_arg(char *arg);
-char	**get_command_acces(char *command, char **paths);
 void	ft_err(char *s);
 
 /*	pipex utils */
@@ -50,6 +48,6 @@ void	print_array(char **arr);
 
 /*  here_doc    */
 
-int	here_doc(char *limiter);
+int	here_doc(int argc, char *argv[], char **paths);
 
 #endif
