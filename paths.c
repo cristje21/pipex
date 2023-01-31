@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   paths.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/30 17:36:14 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/01/30 22:53:22 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   paths.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/01/30 17:36:14 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/01/31 17:11:52 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,12 @@ char	**create_paths(char **envp)
 	int		i;
 
 	i = 0;
-	envp = NULL;
 	if (envp == NULL)
 		return (path_manual());
 	while (envp[i] && ft_strncmp(envp[i], "PATH", 4))
 		i++;
 	if (envp[i] == NULL)
-		return (NULL);
+		return (path_manual());
 	paths = ft_split(&envp[i][5], ':');
 	paths = finish_paths(paths);
 	if (paths == NULL)

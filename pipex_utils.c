@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/28 20:18:41 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/01/31 07:50:31 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   pipex_utils.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/01/28 20:18:41 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/01/31 15:14:21 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	close_pipe(int p[])
 
 void	ft_err(char *s)
 {
-	ft_putnstr_fd(STDERR_FILENO, 1, "pipex: ");
-	perror(s);
+	ft_putnstr_fd(STDERR_FILENO, 3, "pipex: ", s, strerror(errno));
 	exit(errno);
 }

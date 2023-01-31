@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/30 16:43:19 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/01/31 07:25:19 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   pipex.h                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/12/30 16:43:19 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/01/31 17:11:15 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ char	**create_paths(char **envp);
 
 /*	access	*/
 
-char	**get_command_acces(char *command, char **paths);
+char	**get_command_acces(char *command, char *envp[]);
 
 /* prototypes */
 
-int		redirect(char *argv[], char **paths, int argc, int fd_to_read_from);
+int		redirect(char *argv[], char *envp[], int argc, int fd_to_read_from);
 char	**split_arg(char *arg);
 void	ft_err(char *s);
 
@@ -48,6 +48,6 @@ void	print_array(char **arr);
 
 /*  here_doc    */
 
-int	here_doc(int argc, char *argv[], char **paths);
+int	here_doc(int argc, char *argv[], char *envp[]);
 
 #endif
