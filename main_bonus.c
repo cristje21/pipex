@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main_bonus.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/12/30 16:43:12 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/02/01 15:25:06 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/30 16:43:12 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/02/01 16:57:37 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 int	append(char *argv[])
 {
-	while (strncmp(*argv, "here_doc", 8) && strncmp(*argv, "./pipex", 7))
+	while (ft_strncmp(*argv, "here_doc", 8) && strncmp(*argv, "./pipex", 7))
 		argv--;
-	if (!strncmp(*argv, "./pipex", 7))
+	if (!ft_strncmp(*argv, "./pipex", 7))
 		return (1);
 	return (0);
 }
@@ -35,8 +35,8 @@ void	redirect_outfile(char *argv[], char *envp[], int fd_to_read_from)
 			| S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
 	if (fd == -1)
 	{
-		ft_putnstr_fd(STDERR_FILENO, 5, "pipex: ",
-			argv[1], ": ", strerror(errno), "\n");
+		ft_putstr_fd("pipex: ", STDERR_FILENO);
+		perror(argv[1]);
 		exit(errno);
 	}
 	command = get_command_acces(*argv, envp);
@@ -45,7 +45,7 @@ void	redirect_outfile(char *argv[], char *envp[], int fd_to_read_from)
 		&& dup2(fd_to_read_from, STDIN_FILENO) != -1
 		&& close(fd_to_read_from) != -1)
 		execve(command[0], command, envp);
-	perror("pipex");
+	perror("pipex: child execution");
 	exit(errno);
 }
 
@@ -61,7 +61,7 @@ void	do_child(char *arg, char *envp[], int fd_to_read_from, int p[])
 		&& dup2(p[1], STDOUT_FILENO) != -1
 		&& close_pipe(p))
 		execve(command[0], command, envp);
-	perror("pipex");
+	perror("pipex: child execution");
 	exit(errno);
 }
 
@@ -71,11 +71,7 @@ int	redirect(char *argv[], char *envp[], int argc, int fd_to_read_from)
 	pid_t	pid;
 	int		status;
 
-	if (pipe(new_pipe) == -1)
-		ft_err("pipe");
-	pid = fork();
-	if (pid == -1)
-		ft_err("fork");
+	pid = pipe_and_fork(new_pipe);
 	if (pid == 0)
 	{
 		if (argc != 2)
@@ -99,9 +95,14 @@ int	main(int argc, char *argv[], char *envp[])
 	int		fd;
 	int		status;
 
-	if (argc < 5)
-		return (ft_putnstr_fd(STDERR_FILENO, 1,
-				"please enter at least 4 arguments\n"));
+	if (argc < 5 || ft_strncmp(*argv, "./pipex" 7))
+	{
+		if (argc < 5)
+			return (ft_putstr_fd("please enter at least 4 arguments\n",
+					STDERR_FILENO));
+		return (ft_putstr_fd("please make sure the executable has the name 'pipex'\n",
+				STDERR_FILENO));
+	}
 	if (!strncmp(argv[1], "here_doc", 8))
 		here_doc(argc - 2, &argv[2], envp);
 	fd = open(argv[1], O_RDONLY);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/01/28 20:18:41 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/02/01 13:22:09 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/28 20:18:41 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/02/01 16:29:17 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,30 @@ void	ft_err(char *s)
 	exit(errno);
 }
 
+int	pipe_and_fork(int p[])
+{
+	pid_t	pid;
+
+	if (pipe(p) == -1)
+		ft_err("pipe");
+	pid = fork();
+	if (pid == -1)
+		ft_err("fork");
+	return (pid);
+}
+
 char	**free_all(char	**s1)
 {
 	int	i;
 
 	i = 0;
-	if (s1)
+	if (!s1)
+		return (NULL);
+	while (s1[i])
 	{
-		while (s1[i])
-		{
-			free(s1[i]);
-			i++;
-		}
-		free(s1);
+		free(s1[i]);
+		i++;
 	}
+	free(s1);
 	return (NULL);
 }

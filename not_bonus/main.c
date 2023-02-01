@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/12/30 16:43:12 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/02/01 13:52:10 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/30 16:43:12 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/02/01 16:20:12 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	redirect_outfile(char *argv[], char *envp[], int fd_to_read_from)
 		&& dup2(fd_to_read_from, STDIN_FILENO) != -1
 		&& close(fd_to_read_from) != -1)
 		execve(command[0], command, envp);
-	perror("pipex");
+	perror("pipex: child execution");
 	exit(errno);
 }
 
@@ -49,7 +49,7 @@ void	do_child(char *arg, char *envp[], int fd_to_read_from, int p[])
 		&& dup2(p[1], STDOUT_FILENO) != -1
 		&& close_pipe(p))
 		execve(command[0], command, envp);
-	perror("pipex");
+	perror("pipex: child execution");
 	exit(errno);
 }
 
@@ -59,11 +59,12 @@ int	redirect(char *argv[], char *envp[], int argc, int fd_to_read_from)
 	pid_t	pid;
 	int		status;
 
-	if (pipe(new_pipe) == -1)
-		ft_err("pipe");
-	pid = fork();
-	if (pid == -1)
-		ft_err("fork");
+	pid = pipe_and_fork(&new_pipe);
+	// if (pipe(new_pipe) == -1)
+	// 	ft_err("pipe");
+	// pid = fork();
+	// if (pid == -1)
+	// 	ft_err("fork");
 	if (pid == 0)
 	{
 		if (argc != 2)

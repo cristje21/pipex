@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   pipex_bonus.h                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/12/30 16:43:19 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/02/01 13:55:30 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/30 16:43:19 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/02/01 16:29:06 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	*ft_trim_quote(char *s);
 int		close_pipe(int pipe[]);
 void	ft_err(char *s);
 void	print_array(char **arr);
+int		pipe_and_fork(int p[]);
 
 /*  here_doc    */
 
