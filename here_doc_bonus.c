@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   here_doc.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/30 20:02:54 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/02/01 10:23:48 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   here_doc_bonus.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/01/30 20:02:54 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/02/01 15:06:32 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 #include "libft/libft.h"
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -59,7 +59,8 @@ int	here_doc(int argc, char *argv[], char *envp[])
 	close(fd);
 	fd = open("here_doc", O_RDONLY);
 	if (fd == -1)
-		ft_putnstr_fd(STDERR_FILENO, 3, "pipex: here_doc: ", strerror(errno), "\n");
+		ft_putnstr_fd(STDERR_FILENO, 3, "pipex: here_doc: ",
+			strerror(errno), "\n");
 	unlink("here_doc");
 	status = redirect(&argv[1], envp, argc - 1, fd);
 	exit(status);

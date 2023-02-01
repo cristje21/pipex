@@ -6,7 +6,7 @@
 #    By: cristje <cristje@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/10/12 13:59:30 by cvan-sch      #+#    #+#                  #
-#    Updated: 2023/01/30 16:29:20 by cvan-sch      ########   odam.nl          #
+#    Updated: 2023/02/01 13:45:20 by cvan-sch      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,16 +36,18 @@ OBJ_F = $(SRC_F:%.c=%.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ_F)
-	ar rc $(NAME) $^
+	@ar rc $(NAME) $^
+	@echo "completed	:	compiliation		:	libft"
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c -o $@ $^
 
-clean : 
-	rm -f $(OBJ_F)
+clean :
+	@rm -f $(OBJ_F)
+	@echo "removed	:	object files		:	libft"
 
 fclean : clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re : fclean all
 

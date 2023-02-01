@@ -6,29 +6,12 @@
 /*   By: cristje <cristje@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/30 17:36:14 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/31 17:11:52 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/02/01 13:21:57 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "pipex.h"
-
-char	**free_all(char	**s1)
-{
-	int	i;
-
-	i = 0;
-	if (s1)
-	{
-		while (s1[i])
-		{
-			free(s1[i]);
-			i++;
-		}
-		free(s1);
-	}
-	return (NULL);
-}
 
 static char	**finish_paths(char **paths)
 {
@@ -86,10 +69,5 @@ char	**create_paths(char **envp)
 		return (path_manual());
 	paths = ft_split(&envp[i][5], ':');
 	paths = finish_paths(paths);
-	if (paths == NULL)
-	{
-		ft_putnstr_fd(STDERR_FILENO, 3, "pipex: ", strerror(ENOMEM), "\n");
-		return (NULL);
-	}
 	return (paths);
 }

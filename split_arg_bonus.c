@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   split_arg.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/02 16:19:12 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/01/29 00:24:50 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   split_arg_bonus.c                                  :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/01/02 16:19:12 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/02/01 15:06:54 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 #include "libft/libft.h"
 
 static int	count_word_len(char *arg, int i)
@@ -77,7 +77,7 @@ static char	**make_all(char **result, char *arg, int count)
 		j = count_word_len(arg, i);
 		result[k] = ft_substr(arg, i, j);
 		if (result[k] == NULL)
-			exit(ENOMEM);
+			ft_err("malloc: ");
 		if (check_quotes(result[k]))
 		{
 			temp = ft_trim_quote(result[k]);
@@ -98,7 +98,7 @@ char	**split_arg(char *arg)
 	count = count_args(arg);
 	result = malloc((count + 1) * sizeof(char *));
 	if (result == NULL)
-		exit(ENOMEM);
+		ft_err("malloc: ");
 	result = make_all(result, arg, count);
 	return (result);
 }

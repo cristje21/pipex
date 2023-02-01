@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/30 16:43:12 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/02/01 09:42:04 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/12/30 16:43:12 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/02/01 13:52:10 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	redirect_outfile(char *argv[], char *envp[], int fd_to_read_from)
 		exit(errno);
 	}
 	command = get_command_acces(*argv, envp);
+	print_array(command);
 	if (dup2(fd, STDOUT_FILENO) != -1
 		&& close(fd) != -1
 		&& dup2(fd_to_read_from, STDIN_FILENO) != -1
@@ -52,19 +53,6 @@ void	do_child(char *arg, char *envp[], int fd_to_read_from, int p[])
 	exit(errno);
 }
 
-// void	fork_process(void)
-// {
-// 	pid_t	pid;
-
-// 	pid = fork();
-// 	if (pid == -1)
-// 		ft_err("fork");
-// 	if (pid != 0)
-// 		return ;
-// 	if (argc != 2)
-// 		do_child(*argv, envp, )
-// }
-
 int	redirect(char *argv[], char *envp[], int argc, int fd_to_read_from)
 {
 	int		new_pipe[2];
@@ -86,17 +74,12 @@ int	redirect(char *argv[], char *envp[], int argc, int fd_to_read_from)
 	if (argc == 2)
 		close(new_pipe[0]);
 	close(new_pipe[1]);
-	wait(&status);
 	if (argc > 2)
 		return (redirect(argv + 1, envp, argc - 1, new_pipe[0]));
+	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (EXIT_FAILURE);
-}
-
-void	func(void)
-{
-	system("leaks pipex");
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -104,15 +87,13 @@ int	main(int argc, char *argv[], char *envp[])
 	int		fd;
 	int		status;
 
-	if (argc < 5)
+	if (argc != 5)
 		return (ft_putnstr_fd(STDERR_FILENO, 1,
-			"please enter at least 4 arguments\n"));
-	if (!strncmp(argv[1], "here_doc", 8))
-		here_doc(argc - 2 , &argv[2], envp);
+				"please enter exactly 4 arguments\n"));
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		ft_putnstr_fd(STDERR_FILENO, 5, "pipex: ", argv[1], ": ", strerror(errno), "\n");
+		ft_putnstr_fd(STDERR_FILENO, 5, "pipex: ", argv[1], ": ",
+			strerror(errno), "\n");
 	status = redirect(&argv[2], envp, argc - 2, fd);
-	atexit(&func);
 	exit(status);
 }
