@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/12/30 16:43:12 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/01/31 21:08:24 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/30 16:43:12 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/02/01 09:42:04 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,19 @@ void	do_child(char *arg, char *envp[], int fd_to_read_from, int p[])
 	exit(errno);
 }
 
+// void	fork_process(void)
+// {
+// 	pid_t	pid;
+
+// 	pid = fork();
+// 	if (pid == -1)
+// 		ft_err("fork");
+// 	if (pid != 0)
+// 		return ;
+// 	if (argc != 2)
+// 		do_child(*argv, envp, )
+// }
+
 int	redirect(char *argv[], char *envp[], int argc, int fd_to_read_from)
 {
 	int		new_pipe[2];
@@ -73,9 +86,9 @@ int	redirect(char *argv[], char *envp[], int argc, int fd_to_read_from)
 	if (argc == 2)
 		close(new_pipe[0]);
 	close(new_pipe[1]);
+	wait(&status);
 	if (argc > 2)
 		return (redirect(argv + 1, envp, argc - 1, new_pipe[0]));
-	wait(&status);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (EXIT_FAILURE);
