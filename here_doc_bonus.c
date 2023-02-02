@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   here_doc_bonus.c                                   :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/01/30 20:02:54 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/02/01 15:06:32 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/30 20:02:54 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/02/02 09:51:13 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 #include "libft/libft.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 
-int	temp_file(void)
+static int	temp_file(void)
 {
 	int	fd;
 
-	fd = open("here_doc", O_WRONLY | O_CREAT | O_EXCL, S_IRUSR
-			| S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+	fd = open("here_doc", O_WRONLY | O_CREAT | O_EXCL, 0600);
 	if (fd == -1)
 		ft_putnstr_fd(STDERR_FILENO, 2, "pipex: here_doc: ", strerror(errno));
 	return (fd);
 }
 
-int	prompt_user(char *s, int fd)
+static int	prompt_user(char *s, int fd)
 {
 	char	*str;
 

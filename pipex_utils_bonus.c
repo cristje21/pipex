@@ -6,12 +6,23 @@
 /*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:18:41 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/02/01 16:54:29 by cristje          ###   ########.fr       */
+/*   Updated: 2023/02/02 00:16:30 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "pipex_bonus.h"
+
+int	append(char *argv[])
+{
+	while (ft_strncmp(*argv, "./pipex", 7)
+		&& ft_strncmp(*argv, "here_doc", 8)
+		&& ft_strncmp(*argv, "./a.out", 7))
+		argv--;
+	if (!ft_strncmp(*argv, "here_doc", 8))
+		return (0);
+	return (1);
+}
 
 char	*ft_trim_quote(char *s)
 {
@@ -27,21 +38,6 @@ char	*ft_trim_quote(char *s)
 	return (new);
 }
 
-int	close_pipe(int p[])
-{
-	if (close(p[0]) != -1 && close(p[1]) != -1)
-		return (1);
-	perror("pipex: close");
-	exit(errno);
-}
-
-void	ft_err(char *s)
-{
-	ft_putstr_fd("pipex: ", STDERR_FILENO);
-	perror(s);
-	exit(errno);
-}
-
 int	pipe_and_fork(int p[])
 {
 	pid_t	pid;
@@ -54,18 +50,10 @@ int	pipe_and_fork(int p[])
 	return (pid);
 }
 
-char	**free_all(char	**s1)
+int	close_pipe(int p[])
 {
-	int	i;
-
-	i = 0;
-	if (!s1)
-		return (NULL);
-	while (s1[i])
-	{
-		free(s1[i]);
-		i++;
-	}
-	free(s1);
-	return (NULL);
+	if (close(p[0]) != -1 && close(p[1]) != -1)
+		return (1);
+	perror("pipex: close");
+	exit(errno);
 }

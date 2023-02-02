@@ -6,33 +6,22 @@
 /*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:43:12 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/02/01 16:57:37 by cristje          ###   ########.fr       */
+/*   Updated: 2023/02/02 10:26:42 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 #include "libft/libft.h"
 
-int	append(char *argv[])
-{
-	while (ft_strncmp(*argv, "here_doc", 8) && strncmp(*argv, "./pipex", 7))
-		argv--;
-	if (!ft_strncmp(*argv, "./pipex", 7))
-		return (1);
-	return (0);
-}
-
-void	redirect_outfile(char *argv[], char *envp[], int fd_to_read_from)
+static void	do_last(char *argv[], char *envp[], int fd_to_read_from)
 {
 	int		fd;
 	char	**command;
 
 	if (append(argv))
-		fd = open(argv[1], O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR
-			| S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+		fd = open(argv[1], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
-		fd = open(argv[1], O_WRONLY | O_APPEND | O_CREAT, S_IRUSR
-			| S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+		fd = open(argv[1], O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fd == -1)
 	{
 		ft_putstr_fd("pipex: ", STDERR_FILENO);
@@ -49,7 +38,7 @@ void	redirect_outfile(char *argv[], char *envp[], int fd_to_read_from)
 	exit(errno);
 }
 
-void	do_child(char *arg, char *envp[], int fd_to_read_from, int p[])
+static void	do_child(char *arg, char *envp[], int fd_to_read_from, int p[])
 {
 	char	**command;
 
@@ -77,14 +66,15 @@ int	redirect(char *argv[], char *envp[], int argc, int fd_to_read_from)
 		if (argc != 2)
 			do_child(*argv, envp, fd_to_read_from, new_pipe);
 		close_pipe(new_pipe);
-		redirect_outfile(argv, envp, fd_to_read_from);
+		do_last(argv, envp, fd_to_read_from);
 	}
 	if (argc == 2)
 		close(new_pipe[0]);
 	close(new_pipe[1]);
 	if (argc > 2)
 		return (redirect(argv + 1, envp, argc - 1, new_pipe[0]));
-	waitpid(pid, &status, 0);
+	if (waitpid(pid, &status, 0) == -1)
+		perror("pipex: waitpid()");
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (EXIT_FAILURE);
@@ -95,13 +85,18 @@ int	main(int argc, char *argv[], char *envp[])
 	int		fd;
 	int		status;
 
-	if (argc < 5 || ft_strncmp(*argv, "./pipex" 7))
+	int i = unlink("kassbaas");
+	if (argc < 6 || ft_strncmp(*argv, "./pipex", 7))
 	{
 		if (argc < 5)
 			return (ft_putstr_fd("please enter at least 4 arguments\n",
-					STDERR_FILENO));
-		return (ft_putstr_fd("please make sure the executable has the name 'pipex'\n",
-				STDERR_FILENO));
+					STDERR_FILENO), 1);
+		else if (argc == 5 && ft_strncmp(*(argv + 1), "here_doc", 8))
+		{
+			ft_putstr_fd("format: './pipex [infile] [cmd1]    [cmd2] [...]  [outfile]'\n", STDERR_FILENO);
+			ft_putstr_fd("format: './pipex here_doc [limiter] [cmd1] [cmd2] [...] [outfile]'\n", STDERR_FILENO);
+			return (1);
+		}
 	}
 	if (!strncmp(argv[1], "here_doc", 8))
 		here_doc(argc - 2, &argv[2], envp);
