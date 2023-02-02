@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_bonus.h                                      :+:    :+:            */
+/*   pipex.h                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: cristje <cristje@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/30 16:43:19 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/02/02 15:32:21 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/02/02 15:36:02 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_BONUS_H
-# define PIPEX_BONUS_H
+#ifndef PIPEX_H
+# define PIPEX_H
 
 /* libraries included */
 
 # include <unistd.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <stdlib.h>
+
+# include <stdio.h>
 # include <sys/wait.h>
 # include <sys/errno.h>
 # include <string.h>
@@ -42,14 +43,10 @@ char	*ft_trim_quote(char *s);
 int		close_pipe(int pipe[]);
 int		pipe_and_fork(int p[]);
 
-/*  here_doc    */
-
-int		here_doc(int argc, char *argv[], char *envp[]);
-
 /*	error	*/
 
 void	ft_err(char *s);
 char	**free_all(char	**s1);
-void	initial_error(int argc, char *argv[]);
+void	initial_error(int argc);
 
 #endif

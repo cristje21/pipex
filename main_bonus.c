@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/30 16:43:12 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/02/02 10:26:42 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main_bonus.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/12/30 16:43:12 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/02/02 15:30:04 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	do_last(char *argv[], char *envp[], int fd_to_read_from)
 	int		fd;
 	char	**command;
 
-	if (append(argv))
+	if (unlink("here_doc") == -1)
 		fd = open(argv[1], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
 		fd = open(argv[1], O_WRONLY | O_APPEND | O_CREAT, 0644);
@@ -34,7 +34,8 @@ static void	do_last(char *argv[], char *envp[], int fd_to_read_from)
 		&& dup2(fd_to_read_from, STDIN_FILENO) != -1
 		&& close(fd_to_read_from) != -1)
 		execve(command[0], command, envp);
-	perror("pipex: child execution");
+	ft_putstr_fd("pipex: ", STDERR_FILENO);
+	perror(*command);
 	exit(errno);
 }
 
@@ -50,7 +51,8 @@ static void	do_child(char *arg, char *envp[], int fd_to_read_from, int p[])
 		&& dup2(p[1], STDOUT_FILENO) != -1
 		&& close_pipe(p))
 		execve(command[0], command, envp);
-	perror("pipex: child execution");
+	ft_putstr_fd("pipex: ", STDERR_FILENO);
+	perror(*command);
 	exit(errno);
 }
 
@@ -85,19 +87,7 @@ int	main(int argc, char *argv[], char *envp[])
 	int		fd;
 	int		status;
 
-	int i = unlink("kassbaas");
-	if (argc < 6 || ft_strncmp(*argv, "./pipex", 7))
-	{
-		if (argc < 5)
-			return (ft_putstr_fd("please enter at least 4 arguments\n",
-					STDERR_FILENO), 1);
-		else if (argc == 5 && ft_strncmp(*(argv + 1), "here_doc", 8))
-		{
-			ft_putstr_fd("format: './pipex [infile] [cmd1]    [cmd2] [...]  [outfile]'\n", STDERR_FILENO);
-			ft_putstr_fd("format: './pipex here_doc [limiter] [cmd1] [cmd2] [...] [outfile]'\n", STDERR_FILENO);
-			return (1);
-		}
-	}
+	initial_error(argc, argv);
 	if (!strncmp(argv[1], "here_doc", 8))
 		here_doc(argc - 2, &argv[2], envp);
 	fd = open(argv[1], O_RDONLY);

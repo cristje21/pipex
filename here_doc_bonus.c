@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/30 20:02:54 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/02/02 09:51:13 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   here_doc_bonus.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/01/30 20:02:54 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/02/02 14:34:10 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	here_doc(int argc, char *argv[], char *envp[])
 	if (fd == -1)
 		ft_putnstr_fd(STDERR_FILENO, 3, "pipex: here_doc: ",
 			strerror(errno), "\n");
-	unlink("here_doc");
 	status = redirect(&argv[1], envp, argc - 1, fd);
 	exit(status);
 }

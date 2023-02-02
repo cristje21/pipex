@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   error_bonus.c                                      :+:    :+:            */
+/*   error.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/02 14:44:56 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/02/02 14:53:50 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/02/02 15:44:51 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 #include "libft/libft.h"
 
 void	ft_err(char *s)
@@ -36,22 +36,12 @@ char	**free_all(char	**s1)
 	return (NULL);
 }
 
-void	initial_error(int argc, char *argv[])
+void	initial_error(int argc)
 {
-	if (argc < 6)
+	if (argc != 5)
 	{
-		if (argc < 5)
-		{
-			ft_putnstr_fd(STDIN_FILENO, 2, "format: ./pipex [infile] [cmd1]",
-				" [cmd2] [...] [outfile]\n");
-			exit(EXIT_FAILURE);
-		}
-		else if (argc == 5 && !ft_strncmp(*(argv + 1), "here_doc", 8))
-		{
-			ft_putnstr_fd(STDIN_FILENO, 2, "format: ./pipex here_doc [infile]",
-				" [cmd1] [cmd2] [...] [outfile]\n");
-			exit(EXIT_FAILURE);
-		}
+		ft_putnstr_fd(STDIN_FILENO, 2, "format: ./pipex [infile] [cmd1]",
+			" [cmd2] [...] [outfile]\n");
+		exit(EXIT_FAILURE);
 	}
-	return ;
 }

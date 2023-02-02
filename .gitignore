@@ -1,4 +1,6 @@
-input
-output
+infile
+outfile
 pipex
 libft/*.o
+libft/libft.a
+.vscode
