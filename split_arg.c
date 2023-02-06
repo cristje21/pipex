@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   split_arg.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/01/02 16:19:12 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/02/02 15:45:29 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   split_arg.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/02 16:19:12 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/02/04 15:16:24 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	**make_all(char **result, char *arg, int count)
 		j = count_word_len(arg, i);
 		result[k] = ft_substr(arg, i, j);
 		if (result[k] == NULL)
-			ft_err("malloc: ");
+			ft_err("malloc");
 		if (check_quotes(result[k]))
 		{
 			temp = ft_trim_quote(result[k]);

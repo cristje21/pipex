@@ -6,7 +6,7 @@
 /*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 16:19:12 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/02/02 00:28:18 by cristje          ###   ########.fr       */
+/*   Updated: 2023/02/04 15:54:57 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	**make_all(char **result, char *arg, int count)
 		j = count_word_len(arg, i);
 		result[k] = ft_substr(arg, i, j);
 		if (result[k] == NULL)
-			ft_err("malloc: ");
+			ft_err("malloc");
 		if (check_quotes(result[k]))
 		{
 			temp = ft_trim_quote(result[k]);
@@ -98,7 +98,7 @@ char	**split_arg(char *arg)
 	count = count_args(arg);
 	result = malloc((count + 1) * sizeof(char *));
 	if (result == NULL)
-		ft_err("malloc: ");
+		ft_err("malloc");
 	result = make_all(result, arg, count);
 	return (result);
 }

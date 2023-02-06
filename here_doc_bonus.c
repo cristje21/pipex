@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   here_doc_bonus.c                                   :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/01/30 20:02:54 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/02/02 14:34:10 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/30 20:02:54 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/02/06 14:54:32 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	temp_file(void)
 
 	fd = open("here_doc", O_WRONLY | O_CREAT | O_EXCL, 0600);
 	if (fd == -1)
-		ft_putnstr_fd(STDERR_FILENO, 2, "pipex: here_doc: ", strerror(errno));
+		ft_err("here_doc");
 	return (fd);
 }
 
@@ -29,11 +29,13 @@ static int	prompt_user(char *s, int fd)
 
 	write(1, "> ", 2);
 	str = get_next_line(STDIN_FILENO);
+	if (str == NULL)
+		ft_err("malloc");
 	if (ft_strncmp(s, str, ft_strlen(s)))
 	{
 		ft_putstr_fd(str, fd);
 		free(str);
-		return (1);
+		return (prompt_user(s, fd));
 	}
 	free(str);
 	return (0);
@@ -48,15 +50,16 @@ int	here_doc(int argc, char *argv[], char *envp[])
 	fd = temp_file();
 	s = ft_strjoin(*argv, "\n");
 	if (s == NULL)
-		exit(ENOMEM);
-	while (prompt_user(s, fd))
-		;
+		ft_err("malloc");
+	// while (prompt_user(s, fd))
+	// 	;
+	prompt_user(s, fd);
 	free(s);
-	close(fd);
+	if (close(fd) == -1)
+		ft_err("close");
 	fd = open("here_doc", O_RDONLY);
 	if (fd == -1)
-		ft_putnstr_fd(STDERR_FILENO, 3, "pipex: here_doc: ",
-			strerror(errno), "\n");
+		ft_err("here_doc");
 	status = redirect(&argv[1], envp, argc - 1, fd);
 	exit(status);
 }

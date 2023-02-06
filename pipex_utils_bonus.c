@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   pipex_utils_bonus.c                                :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/01/28 20:18:41 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/02/02 14:17:39 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   pipex_utils_bonus.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/28 20:18:41 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/02/04 15:57:31 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ int	close_pipe(int p[])
 {
 	if (close(p[0]) != -1 && close(p[1]) != -1)
 		return (1);
-	perror("pipex: close");
-	exit(errno);
+	ft_err("close");
+	return (0);
 }

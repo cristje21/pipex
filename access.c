@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   access.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/01/05 15:10:48 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/02/02 15:44:58 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   access.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/05 15:10:48 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/02/04 16:06:14 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static char	**check_access(char **result, char **paths)
 	{
 		temp = ft_strjoin(paths[i], result[0]);
 		if (temp == NULL)
-			ft_putnstr_fd(STDERR_FILENO, 3, "pipex: malloc: ",
-				strerror(ENOMEM), "\n");
+			ft_err("malloc");
 		if (!access(temp, F_OK))
 		{
 			free(result[0]);
@@ -48,12 +47,6 @@ char	**get_command_acces(char *command, char *envp[])
 	char	**paths;
 
 	paths = create_paths(envp);
-	if (paths == NULL)
-	{
-		ft_putnstr_fd(STDERR_FILENO, 3, "pipex: malloc: ",
-			strerror(ENOMEM), "\n");
-		exit(ENOMEM);
-	}
 	result = split_arg(command);
 	return (check_access(result, paths));
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   error.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/02/02 14:44:56 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/02/02 15:44:51 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/02 14:44:56 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/02/04 16:09:09 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	initial_error(int argc)
 {
 	if (argc != 5)
 	{
-		ft_putnstr_fd(STDIN_FILENO, 2, "format: ./pipex [infile] [cmd1]",
-			" [cmd2] [...] [outfile]\n");
+		ft_putnstr_fd(STDERR_FILENO, 2, "format: ./pipex [infile] [cmd1]",
+			" [cmd2] [outfile]\n");
 		exit(EXIT_FAILURE);
 	}
 }

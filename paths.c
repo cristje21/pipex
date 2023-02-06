@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   paths.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cristje <cristje@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/01/30 17:36:14 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/02/02 15:45:15 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   paths.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/30 17:36:14 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/02/06 14:36:36 by cristje          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ static char	**finish_paths(char **paths)
 	char	*temp;
 
 	i = 0;
-	if (paths == NULL)
-		return (NULL);
 	while (paths[i])
 	{
 		temp = ft_strjoin(paths[i], "/");
 		if (temp == NULL)
-			return (free_all(paths));
+			ft_err("malloc");
 		free(paths[i]);
 		paths[i] = temp;
 		i++;
@@ -43,12 +41,12 @@ static char	**path_manual(void)
 	i = 0;
 	paths = malloc(7 * sizeof(char *));
 	if (paths == NULL)
-		return (NULL);
+		ft_err("malloc");
 	while (i < 6)
 	{
 		paths[i] = ft_strdup(temp[i]);
 		if (paths[i] == NULL)
-			return (free_all(paths));
+			ft_err("malloc");
 		i++;
 	}
 	paths[i] = NULL;
@@ -68,6 +66,8 @@ char	**create_paths(char **envp)
 	if (envp[i] == NULL)
 		return (path_manual());
 	paths = ft_split(&envp[i][5], ':');
+	if (paths == NULL)
+		ft_err("malloc");
 	paths = finish_paths(paths);
 	return (paths);
 }

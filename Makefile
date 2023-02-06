@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         ::::::::             #
-#    Makefile                                           :+:    :+:             #
-#                                                      +:+                     #
-#    By: cristje <cristje@student.42.fr>              +#+                      #
-#                                                    +#+                       #
-#    Created: 2022/12/30 16:43:16 by cvan-sch      #+#    #+#                  #
-#    Updated: 2023/02/02 16:12:12 by cvan-sch      ########   odam.nl          #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cristje <cristje@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/12/30 16:43:16 by cvan-sch          #+#    #+#              #
+#    Updated: 2023/02/04 16:53:45 by cristje          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ $(NAME) : $(SRC)
 clean :
 	@rm -f infile
 	@rm -f outfile
-	@echo "removed infile outfile"
+	@echo "removed in/outfile"
 	@make -C libft clean
 
 fclean : clean
