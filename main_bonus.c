@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/30 16:43:12 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/02/04 16:30:08 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main_bonus.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/12/30 16:43:12 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/02/08 12:00:59 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,12 @@ int	redirect(char *argv[], char *envp[], int argc, int fd_to_read_from)
 		close_pipe(new_pipe);
 		do_last(argv, envp, fd_to_read_from);
 	}
-	close(new_pipe[1]);
+	if (close(new_pipe[1]) == -1)
+		ft_err("close");
 	if (argc > 2)
 		return (redirect(argv + 1, envp, argc - 1, new_pipe[0]));
-	close(new_pipe[0]);
+	if (close(new_pipe[0]) == -1)
+		ft_err("close");
 	if (waitpid(pid, &status, 0) == -1)
 		ft_err("waitpid");
 	if (WIFEXITED(status))
@@ -79,7 +81,7 @@ int	main(int argc, char *argv[], char *envp[])
 	int		status;
 
 	initial_error(argc, argv);
-	if (!strncmp(argv[1], "here_doc", 8))
+	if (!ft_strncmp(argv[1], "here_doc", 9))
 		here_doc(argc - 2, &argv[2], envp);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)

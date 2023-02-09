@@ -6,7 +6,7 @@
 /*   By: cristje <cristje@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/30 16:43:19 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/02/02 15:32:21 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/02/06 19:15:02 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <sys/errno.h>
-# include <string.h>
 
 /*	paths	*/
 

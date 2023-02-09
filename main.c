@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/30 16:43:12 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/02/06 14:24:02 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/12/30 16:43:12 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/02/06 19:21:32 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,7 @@ static void	do_last(char *argv[], char *envp[], int fd_to_read_from)
 
 	fd = open(argv[1], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd == -1)
-	{
-		ft_putstr_fd("pipex: ", STDERR_FILENO);
-		perror(argv[1]);
-		exit(errno);
-	}
+		ft_err(argv[1]);
 	command = get_command_acces(*argv, envp);
 	if (dup2(fd, STDOUT_FILENO) != -1
 		&& close(fd) != -1
@@ -63,10 +59,12 @@ int	redirect(char *argv[], char *envp[], int argc, int fd_to_read_from)
 		close_pipe(new_pipe);
 		do_last(argv, envp, fd_to_read_from);
 	}
-	close(new_pipe[1]);
+	if (close(new_pipe[1]) == -1)
+		ft_err("close");
 	if (argc > 2)
 		return (redirect(argv + 1, envp, argc - 1, new_pipe[0]));
-	close(new_pipe[0]);
+	if (close(new_pipe[0]) == -1)
+		ft_err("close");
 	if (waitpid(pid, &status, 0) == -1)
 		ft_err("waitpid");
 	if (WIFEXITED(status))
@@ -79,8 +77,6 @@ int	main(int argc, char *argv[], char *envp[])
 	int		fd;
 	int		status;
 
-	char **command = get_command_acces(argv[1], envp);
-	print_array(command);
 	initial_error(argc);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)

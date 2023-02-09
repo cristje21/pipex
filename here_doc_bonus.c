@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/30 20:02:54 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/02/06 14:54:32 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   here_doc_bonus.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/01/30 20:02:54 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/02/06 15:19:59 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int	here_doc(int argc, char *argv[], char *envp[])
 	s = ft_strjoin(*argv, "\n");
 	if (s == NULL)
 		ft_err("malloc");
-	// while (prompt_user(s, fd))
-	// 	;
 	prompt_user(s, fd);
 	free(s);
 	if (close(fd) == -1)

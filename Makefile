@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: cristje <cristje@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/30 16:43:16 by cvan-sch          #+#    #+#              #
-#    Updated: 2023/02/04 16:53:45 by cristje          ###   ########.fr        #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: cristje <cristje@student.42.fr>              +#+                      #
+#                                                    +#+                       #
+#    Created: 2022/12/30 16:43:16 by cvan-sch      #+#    #+#                  #
+#    Updated: 2023/02/06 16:20:58 by cvan-sch      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,16 +27,22 @@ else
 SRC = $(SRC_REG)
 endif
 
+OBJ_F = $(SRC:%.c=%.o)
+
 all : $(NAME)
 
-$(NAME) : $(SRC)
+$(NAME) : $(OBJ_F)
 	@make -C libft
-	@$(CC) $(CFLAGS) -o $@ $^ libft/libft.a
+	$(CC) $(CFLAGS) -o $@ $^ libft/libft.a
+
+%.o : %.c
+	$(CC) $(CFLAGS) -c -o $@ $^
 
 clean :
-	@rm -f infile
 	@rm -f outfile
-	@echo "removed in/outfile"
+	@rm -f $(SRC_REG:%.c=%.o)
+	@rm -f $(SRC_BONUS:%.c=%.o)
+	@echo "removed object/outfile"
 	@make -C libft clean
 
 fclean : clean
@@ -47,7 +53,7 @@ fclean : clean
 re : fclean all
 
 bonus :
-	make WITH_BONUS=1 all
+	@make WITH_BONUS=1 all
 
 git :
 	@git add .

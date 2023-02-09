@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   access_bonus.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cristje <cristje@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 15:10:48 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/02/04 15:52:51 by cristje          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   access_bonus.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cristje <cristje@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/01/05 15:10:48 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/02/08 11:59:44 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static char	**check_access(char **result, char **paths)
 	int		i;
 
 	i = 0;
-	if (!access(result[0], F_OK))
-		return (result);
+	if (!access(result[0], X_OK))
+		return (free_all(paths), result);
 	while (paths[i])
 	{
 		temp = ft_strjoin(paths[i], result[0]);
 		if (temp == NULL)
 			ft_err("malloc");
-		if (!access(temp, F_OK))
+		if (!access(temp, X_OK))
 		{
 			free(result[0]);
 			result[0] = temp;
